@@ -17,5 +17,16 @@ export type Route<Types extends RouteGenericInterface> = RouteOptions<
 export const SeedFxRatesByDateSchema = Type.Object({
   date: Type.String(),
 });
-
 export type SeedFxRatesByDateQuery = Static<typeof SeedFxRatesByDateSchema>;
+
+export const ExchangeRateCurrencyParamSchema = Type.Object({
+  currency: Type.String(),
+})
+export type ExchangeRateCurrencyParam = Static<typeof ExchangeRateCurrencyParamSchema>;
+
+export const ExchnageRateCalculationBodySchema = Type.Object({
+  source_currency: Type.String(),
+  target_currency: Type.String(),
+  amount: Type.String(),
+});
+export type ExchnageRateCalculationBody = Static<typeof ExchnageRateCalculationBodySchema>;

@@ -14,3 +14,7 @@ export const getFxRates = async (app: FastifyInstance): Promise<FxRatesDb[]> => 
   return await app.knex.table(DB_EXCHANGE_RATE_TABLE).select();
 };
 
+export const getFxRatesLatest = async (app: FastifyInstance): Promise<FxRatesDb> => {
+  return await app.knex.table(DB_EXCHANGE_RATE_TABLE).select().where({ posting_date: new Date()}).first();
+};
+

@@ -71,5 +71,12 @@ export const FxRatesDbSchema = Type.Object({
 });
 export type FxRatesDb = Static<typeof FxRatesDbSchema>;
 
-export const FxRatesJsonSchema =  Type.String(FxRateDataSchemas);
+export const FxRatesJsonSchema = Type.String(FxRateDataSchemas);
 export type FxRatesJson = Static<typeof FxRatesJsonSchema>;
+
+export const CalculatedFxRateSchema = Type.Object({
+  source_rate: Type.String(),
+  target_rate: Type.String(),
+  amount: Type.String(),
+})
+export type CalculatedFxRate = Static<typeof CalculatedFxRateSchema>;

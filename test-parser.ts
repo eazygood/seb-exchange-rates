@@ -207,6 +207,13 @@ const data2 = [
   },
 ];
 
+function test3() {
+    const a = _.chain(data2).filter((d)=> d.target_currency === 'RSD').head().value();
+    console.log(a);
+}
+
+test3();
+
 interface CurrencyItem {
   date: string;
   source_value: string;
@@ -256,7 +263,7 @@ function transformData(data: any[]): { [currency: string]: any } {
   return transformedData;
 }
 
-transformData(data2)
+// transformData(data2)
 
 function test(): any[] {
   const data = data2.reduce(
