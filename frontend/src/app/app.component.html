@@ -1,4 +1,12 @@
-<table *ngIf="data">
+<select (change)="getFxRatesByCurrency($event)">
+    <option value="" disabled selected>Select currency</option>
+    <!-- Generate options dynamically from the currencies array -->
+    <option *ngFor="let currency of currencies" [value]="currency">{{ currency }}</option>
+    <!-- Add more options for other currencies as needed -->
+  </select>
+  
+  <!-- Display retrieved data -->
+  <table *ngIf="rates">
     <thead>
       <tr>
         <th>Currency</th>
@@ -8,7 +16,7 @@
       </tr>
     </thead>
     <tbody>
-      <ng-container *ngFor="let currency of data | keyvalue">
+      <ng-container *ngFor="let currency of rates | keyvalue">
         <tr *ngFor="let item of currency.value">
           <td>{{ currency.key }}</td>
           <td>{{ item.date }}</td>
@@ -18,3 +26,27 @@
       </ng-container>
     </tbody>
   </table>
+
+
+  <div>
+    <label>From:</label>
+    <select [(ngModel)]="fromCurrency">
+      <option value="" disabled selected>Select currency</option>
+      <option *ngFor="let currency of currencies" [value]="currency">{{ currency }}</option>
+    </select>
+  </div>
+  
+  <div>
+    <label for="toCurrency">To:</label>
+    <select id="toCurrency" [(ngModel)]="toCurrency">
+      <option value="" disabled selected>Select currency</option>
+      <option *ngFor="let currency of currencies" [value]="currency">{{ currency }}</option>
+    </select>
+  </div>
+  
+  <div>
+    <label for="amount">Amount:</label>
+    <input type="number" id="amount" [(ngModel)]="amount">
+  </div>
+  
+  <button (click)="convertCurrency()" value="submit">Convert</button>

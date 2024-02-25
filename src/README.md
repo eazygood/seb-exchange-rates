@@ -56,7 +56,7 @@ Response:
 6. create models
 7. parser chooser ok
 
-1. Central bank exchange rates page. Exchange rates from the Bank of Lithuania are displayed here: https://www.lb.lt/webservices/FxRates/en/.
+1. Central bank exchange rates page. Exchange rates from the Bank of Lithuania are displayed here: https://www.lb.lt/webservices/FxRates/en/. ok
 2. After selecting a specific currency, its exchange rate history is displayed (chart or table).
 3. Currency calculator. The amount is entered, the currency is selected, the program displays the amount in foreign currency and the rate at which it was calculated.
 
