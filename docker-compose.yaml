@@ -1,0 +1,46 @@
+version: "3.7"
+
+services:
+  mysql:
+    container_name: mysql
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - backend
+  app-fastify:
+    container_name: app-fastify
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 5500:5500
+    # links:
+    #   - mysql
+    depends_on:
+      mysql:
+        condition: service_healthy
+    volumes:
+      - api:/usr/src/app/
+    networks:
+      - backend
+volumes:
+  api:
+  mysql_data:
+networks:
+  backend:
+    driver: bridge
