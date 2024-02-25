@@ -1,8 +1,8 @@
 import { FastifyInstance } from "fastify";
-import { FxRates, FxRatesJson } from "../entities";
+import { FxRatesDb, FxRatesJson } from "../entities";
 import { DB_EXCHANGE_RATE_TABLE } from "../constants";
 
-export const saveExchangeRates = async (app: FastifyInstance, exchangeRates: FxRates) => {
+export const saveExchangeRates = async (app: FastifyInstance, exchangeRates: FxRatesDb) => {
   await app.knex
     .table(DB_EXCHANGE_RATE_TABLE)
     .insert(exchangeRates)
@@ -10,12 +10,7 @@ export const saveExchangeRates = async (app: FastifyInstance, exchangeRates: FxR
     .ignore();
 };
 
-export const getFxRates = async (app: FastifyInstance): Promise<FxRatesJson[]> => {
-  const rows =  await app.knex.table(DB_EXCHANGE_RATE_TABLE).select();
-
-  return rows.map((row: FxRates) => ({
-    rates: JSON.parse(row.rates),
-    posting_date: row.posting_date,
-  }));
+export const getFxRates = async (app: FastifyInstance): Promise<FxRatesDb[]> => {
+  return await app.knex.table(DB_EXCHANGE_RATE_TABLE).select();
 };
 
