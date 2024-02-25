@@ -1,5 +1,6 @@
 import console from "console";
 import xmlToJson from "./src/utils/xml-to-json";
+import _ from "lodash";
 
 const data = `
 <FxRates xmlns="http://www.lb.lt/WebServices/FxRates">
@@ -103,7 +104,7 @@ async function getData() {
 //   "credentials": "include"
 // });
 
-getData().catch(console.log);
+// getData().catch(console.log);
 
 const structure = [
   {
@@ -169,6 +170,41 @@ const data2 = [
     target_rate: "117.201880",
     exchange_date: "2024-01-27",
   },
+  {
+    source_currency: "EUR",
+    target_currency: "RSD",
+    source_rate: "1",
+    target_rate: "117.201880",
+    exchange_date: "2024-01-20",
+  },
+  {
+    source_currency: "EUR",
+    target_currency: "RSD",
+    source_rate: "1",
+    target_rate: "117.201880",
+    exchange_date: "2023-01-20",
+  },
+  {
+    source_currency: "EUR",
+    target_currency: "RSD",
+    source_rate: "1",
+    target_rate: "117.201880",
+    exchange_date: "2023-01-20",
+  },
+  {
+    source_currency: "EUR",
+    target_currency: "RSD",
+    source_rate: "1",
+    target_rate: "117.201880",
+    exchange_date: "2023-01-20",
+  },
+  {
+    source_currency: "EUR",
+    target_currency: "RSD",
+    source_rate: "1",
+    target_rate: "117.201880",
+    exchange_date: "2023-01-20",
+  },
 ];
 
 interface CurrencyItem {
@@ -196,6 +232,31 @@ interface Data {
   exchange_date: string;
   source_currency: string;
 }
+
+function transformData(data: any[]): { [currency: string]: any } {
+  // Group the data by target_currency
+  const groupedData  = _.groupBy(data, 'target_currency');
+  console.log(groupedData);
+
+  // Map over the grouped data and transform each group
+  const transformedData = _.mapValues(groupedData, (group) => {
+      // Remove duplicates based on exchange_date
+      const uniqueGroup = _.uniqBy(group, 'exchange_date');
+
+      // Transform the group into the desired format
+      return _.map(uniqueGroup, (item) => ({
+          date: item.exchange_date,
+          source_rate: item.source_rate,
+          target_rate: item.target_rate
+      }));
+  });
+
+  console.log(transformedData);
+
+  return transformedData;
+}
+
+transformData(data2)
 
 function test(): any[] {
   const data = data2.reduce(
@@ -254,10 +315,14 @@ const data3 = [
     RSD: { "2024-01-29": { source_value: "1", target_value: "118.201880" } },
     SAR: { "2024-01-28": { source_value: "1", target_value: "4.067360" } },
   },
+
+  {
+    RSD: { "2024-01-20": { source_value: "1", target_value: "118.201880" } },
+    SAR: { "2024-01-20": { source_value: "1", target_value: "4.067360" } },
+  },
 ];
 
 // test();
-
 
 type CurrencyMap = Map<string, Map<string, CurrencyData>>;
 
@@ -274,29 +339,44 @@ type CurrencyMap = Map<string, Map<string, CurrencyData>>;
   }
 */
 function processData(data: any[]): CurrencyMap {
-
-  console.log(data);
   const result: any = {};
 
-  data.forEach(obj => {
-      Object.entries(obj).forEach(([currency, currencyData]: [string, any]) => {
-          if (!result[currency]) {
-              result[currency] = {};
-          }
-          Object.entries(currencyData).forEach(([date, values]: [string, any]) => {
-              if (result[currency][date]) {
-                 return result
-              }
+  data.forEach((obj) => {
+    Object.entries(obj).forEach(([currency, currencyData]: [string, any]) => {
+      if (!result[currency]) {
+        result[currency] = [];
+      }
+      Object.entries(currencyData).forEach(([date, values]: [string, any]) => {
+        const existingData = result[currency].find((existing: any) =>
+          _.isEqual(existing[date], values)
+        );
+        if (!existingData) {
+          // If date doesn't exist, push it to the array
+          result[currency].push({ [date]: values });
+        }
+        // if (result[currency][date]) {
+        //   return result;
+        // }
 
-              result[currency][date] = values;
-          });
+        // result[currency][date] = values;
       });
+    });
   });
+
+  // const dataArray = _.map(result, (currencyData, currency) => ({
+  //   [currency]: _.sortBy(
+  //     _.map(currencyData, (values, date) => ({ [date]: values })),
+  //     (obj) => Object.keys(obj)[0]
+  //   ),
+  // }));
+
+  // console.log(JSON.stringify(dataArray));
+  console.log(JSON.stringify(result));
 
   return result;
 }
 
-// console.log(processData(test()));
+// processData(test());
 // function mapToObject(map: Map<any, any>): any {
 //   const obj: any = {};
 //   for (const [key, value] of map.entries()) {

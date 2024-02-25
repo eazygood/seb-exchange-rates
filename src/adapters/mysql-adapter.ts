@@ -15,8 +15,6 @@ export async function registerMysqlDatabase(
   console.log("migratin done");
 }
 
-export const getConnection = async (app: FastifyInstance) => {};
-
 export async function withinTransaction<T>({
   app,
   callback,
