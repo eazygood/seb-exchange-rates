@@ -1,0 +1,21 @@
+<div class="container">
+    <h1 class="text-center">Currency Converter</h1>
+  </div>
+    <div class="container">
+      <div class="currency">
+        <select id="currency-one" [(ngModel)]="fromCurrency" (change)="convertCurrency()">
+          <option *ngFor="let currency of currencies" [value]="currency">{{ currency }}</option>
+        </select>
+        <input type="number" id="amount-one" placeholder="0" [(ngModel)]="amount" (input)="convertCurrency()">
+      </div>
+      <div class="swap-rate-container">
+        <button class="btn" id="swap" (click)="swapCurrencies()">Swap</button>
+        <div class="rate" id="rate"></div>
+      </div>
+      <div class="currency">
+        <select id="currency-two" [(ngModel)]="toCurrency" (change)="convertCurrency()">
+          <option *ngFor="let currency of currencies" [value]="currency">{{ currency }}</option>
+        </select>
+        <input type="number" id="amount-two" placeholder="0" value="{{convertResult }}" (input)="convertCurrency()">
+      </div>
+    </div>

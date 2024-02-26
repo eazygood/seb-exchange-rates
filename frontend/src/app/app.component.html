@@ -1,52 +1,61 @@
-<select (change)="getFxRatesByCurrency($event)">
-    <option value="" disabled selected>Select currency</option>
-    <!-- Generate options dynamically from the currencies array -->
-    <option *ngFor="let currency of currencies" [value]="currency">{{ currency }}</option>
-    <!-- Add more options for other currencies as needed -->
-  </select>
-  
-  <!-- Display retrieved data -->
-  <table *ngIf="rates">
-    <thead>
-      <tr>
-        <th>Currency</th>
-        <th>Date</th>
-        <th>Source Rate</th>
-        <th>Target Rate</th>
-      </tr>
-    </thead>
-    <tbody>
-      <ng-container *ngFor="let currency of rates | keyvalue">
-        <tr *ngFor="let item of currency.value">
-          <td>{{ currency.key }}</td>
-          <td>{{ item.date }}</td>
-          <td>{{ item.source_rate }}</td>
-          <td>{{ item.target_rate }}</td>
-        </tr>
-      </ng-container>
-    </tbody>
-  </table>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+      <select class="form-select" (change)="getFxRatesByCurrency($event)">
+          <option value="" disabled [attr.selected]="true">Select currency</option>
+          <!-- Generate options dynamically from the currencies array -->
+          <option *ngFor="let currency of currencies" [value]="currency">{{ currency }}</option>
+          <!-- Add more options for other currencies as needed -->
+        </select>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Currency</th>
+            <th scope="col">Date</th>
+            <th scope="col">Source Rate</th>
+            <th scope="col">Target Rate</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let currency of rates | keyvalue">
+            <tr *ngFor="let item of currency.value">
+              <td scope="row">{{ currency.key }}</td>
+              <td>{{ item.date }}</td>
+              <td>{{ item.source_rate }}</td>
+              <td>{{ item.target_rate }}</td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 
 
-  <div>
-    <label>From:</label>
-    <select [(ngModel)]="fromCurrency">
-      <option value="" disabled selected>Select currency</option>
-      <option *ngFor="let currency of currencies" [value]="currency">{{ currency }}</option>
-    </select>
+
+
+<div class="container">
+  <h1 class="text-center">Currency Converter</h1>
+</div>
+  <div class="container">
+    <div class="currency">
+      <select id="currency-one" [(ngModel)]="fromCurrency" (change)="convertCurrency()">
+        <option *ngFor="let currency of currencies" [value]="currency">{{ currency }}</option>
+      </select>
+      <input type="number" id="amount-one" placeholder="0" [(ngModel)]="amount" (input)="convertCurrency()">
+    </div>
+    <div class="swap-rate-container">
+      <button class="btn" id="swap" (click)="swapCurrencies()">Swap</button>
+      <div class="rate" id="rate"></div>
+    </div>
+    <div class="currency">
+      <select id="currency-two" [(ngModel)]="toCurrency" (change)="convertCurrency()">
+        <option *ngFor="let currency of currencies" [value]="currency">{{ currency }}</option>
+      </select>
+      <input type="number" id="amount-two" placeholder="0" value="{{convertResult }}" (input)="convertCurrency()">
+    </div>
   </div>
-  
-  <div>
-    <label for="toCurrency">To:</label>
-    <select id="toCurrency" [(ngModel)]="toCurrency">
-      <option value="" disabled selected>Select currency</option>
-      <option *ngFor="let currency of currencies" [value]="currency">{{ currency }}</option>
-    </select>
-  </div>
-  
-  <div>
-    <label for="amount">Amount:</label>
-    <input type="number" id="amount" [(ngModel)]="amount">
-  </div>
-  
-  <button (click)="convertCurrency()" value="submit">Convert</button>

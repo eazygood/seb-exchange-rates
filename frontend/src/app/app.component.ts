@@ -43,8 +43,8 @@ export class AppComponent implements OnInit {
   fromCurrency: string = '';
   toCurrency: string = '';
   amount: number | null = 1;
-  convertResult: number = 0.0;
-  convertExchangeRate: number = 0.0;
+  convertResult: string = '';
+  convertExchangeRate: string = '';
 
   constructor(private http: HttpClient) {}
 
@@ -70,6 +70,7 @@ export class AppComponent implements OnInit {
   }
 
   getFxRatesByCurrency(event: Event) {
+    console.log("TJTJT")
     const currency = (event.target as HTMLInputElement).value;
     this.http
       .get<FxRateResponseData>(
@@ -82,34 +83,31 @@ export class AppComponent implements OnInit {
   }
 
   convertCurrency(): void {
-    console.log(this.amount, this.fromCurrency, this.toCurrency);
-
+    console.log('sdf', this.amount, this.fromCurrency, this.toCurrency)
     if (!this.amount || this.fromCurrency === '' || this.toCurrency === '') {
       return;
     }
 
-    const fromCurrencyFxRate = this.fxRates[this.fromCurrency][0].target_rate;
-    const toCurrencyFxRate = this.fxRates[this.toCurrency][0].target_rate;
+    const fromCurrencyFxRate = this.fromCurrency === 'EUR' ? '1' : this.fxRates[this.fromCurrency][0].target_rate;
+    const toCurrencyFxRate = this.toCurrency === 'EUR' ? '1' : this.fxRates[this.toCurrency][0].target_rate
 
-    console.log(fromCurrencyFxRate);
-    console.log(toCurrencyFxRate);
-    console.log(this.fxRates);
-
-    // 1 EUR = source rate and 1 EUR = target rate
-    const sourceCurrencyRateToEUR = parseFloat(fromCurrencyFxRate);
+    // source rate to 1 EUR
+    const sourceCurrencyRateToEUR = 1 / parseFloat(fromCurrencyFxRate);
     const targetCurrencyRateToEUR = parseFloat(toCurrencyFxRate);
-    const exchangeRate = targetCurrencyRateToEUR / sourceCurrencyRateToEUR;
+    const exchangeRate =  sourceCurrencyRateToEUR * targetCurrencyRateToEUR;
 
-    // Convert source amount to foreign currency
-    const amountInEUR = this.amount * exchangeRate;
+    const amountInEUR: number = this.amount * exchangeRate;
 
-    this.convertExchangeRate = exchangeRate;
-    this.convertResult = amountInEUR;
-
-    // Perform conversion logic here based on selected currencies and amount
-    console.log(
-      `Converting ${this.amount} from ${this.fromCurrency} to ${this.toCurrency}`
-    );
-    console.log(this.convertExchangeRate, this.convertResult)
+    this.convertExchangeRate = exchangeRate.toFixed(2);
+    this.convertResult = amountInEUR.toFixed(2);
   }
+
+  swapCurrencies():void {
+    const temp = this.fromCurrency;
+    this.fromCurrency = this.toCurrency;
+    this.toCurrency = temp;
+
+    this.convertCurrency();
+  }
+
 }
