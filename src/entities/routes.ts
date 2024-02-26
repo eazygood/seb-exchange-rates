@@ -30,3 +30,8 @@ export const ExchnageRateCalculationBodySchema = Type.Object({
   amount: Type.String(),
 });
 export type ExchnageRateCalculationBody = Static<typeof ExchnageRateCalculationBodySchema>;
+
+export const ExchangeRatesQuerySchema = Type.Optional(Type.Object({
+  latest: Type.Optional(Type.Boolean()),
+}));
+export type ExchangeRatesQuery = Static<typeof ExchangeRatesQuerySchema>;
