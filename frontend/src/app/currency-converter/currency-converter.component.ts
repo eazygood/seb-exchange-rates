@@ -1,6 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, Component, NO_ERRORS_SCHEMA, OnInit } from '@angular/core';
-import { CurrencyService } from './currency.service';
-import { FxRateData } from './fxrates.model';
+import { FxRatesService } from '../services/fx-rates.service';
+import { FxRateData } from '../fx-rates/fx-rates.model';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -16,9 +16,8 @@ import { RouterOutlet } from '@angular/router';
 })
 
 export class CurrencyConverterComponent implements OnInit {
-  title = 'seb exchange rates';
+  title = 'seb currency converter';
   fxRates: FxRateData;
-  rates: FxRateData;
   currencies: string[] = [];
   fromCurrency: string = '';
   toCurrency: string = '';
@@ -26,29 +25,20 @@ export class CurrencyConverterComponent implements OnInit {
   convertResult: string = '';
   convertExchangeRate: string = '';
 
-  constructor(private currencyService: CurrencyService) {}
+  constructor(private fxRatesService: FxRatesService) {}
 
   ngOnInit(): void {
-    this.currencyService.getExchangeRates().subscribe((response) => {
+    this.fxRatesService.getExchangeRates().subscribe((response) => {
       this.fxRates = response.data;
     });
 
-    this.currencyService.getCurrencies().subscribe((response) => {
+    this.fxRatesService.getCurrencies().subscribe((response) => {
       this.currencies = response.data;
       console.log(this.currencies);
     });
   }
 
-  getRatesByCurrency(event: Event) {
-    this.currencyService.getExchangeRatesByCurrency(event)
-      .subscribe((response) => {
-        this.rates = response.data;
-        console.log(this.rates);
-      });
-  }
-
   convertCurrency(): void {
-    console.log('sdf', this.amount, this.fromCurrency, this.toCurrency)
     if (!this.amount || this.fromCurrency === '' || this.toCurrency === '') {
       return;
     }

@@ -6,7 +6,7 @@ import { FxRateResponseData, FxRateCurrenciesResponseData } from '../fx-rates/fx
 @Injectable({
   providedIn: 'root',
 })
-export class CurrencyService {
+export class FxRatesService {
   constructor(private httpClient: HttpClient) {}
 
   /* To get the current currency exchange rates based on the base provided for the given 'toCurrency' */
