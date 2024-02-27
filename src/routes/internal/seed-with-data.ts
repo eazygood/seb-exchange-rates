@@ -9,11 +9,11 @@ export const seedExchangeRates: Route<{}> = {
     await populateDbWithExchangeRates(req.server);
     await populateDbWithCurrency(req.server);
 
-    reply.code(200).send({status: 'success'})
+    reply.code(200).send({ status: 'success' })
   },
 };
 
-export const seedExchangeRatesByDate: Route<{Querystring: SeedFxRatesByDateQuery}> = {
+export const seedExchangeRatesByDate: Route<{ Querystring: SeedFxRatesByDateQuery }> = {
   method: "GET",
   url: "/seedByDate",
   schema: {
@@ -21,8 +21,7 @@ export const seedExchangeRatesByDate: Route<{Querystring: SeedFxRatesByDateQuery
   },
   async handler(req, reply) {
     await populateDbWithExchangeRates(req.server, req.query.date);
-    // await populateDbWithCurrency(req.server);
 
-    reply.code(200).send({status: 'success'})
+    reply.code(200).send({ status: 'success' })
   },
 };

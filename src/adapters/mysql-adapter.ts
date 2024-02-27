@@ -2,6 +2,18 @@ import { FastifyInstance } from "fastify";
 import path from "path";
 import { Knex } from "knex";
 
+export function getConfig() {
+  return {
+    client: "mysql2",
+    connection: {
+      host: "mysql",
+      user: "user",
+      password: "password",
+      database: "db",
+    },
+  }
+}
+
 export async function registerMysqlDatabase(
   app: FastifyInstance
 ): Promise<void> {

@@ -3,12 +3,9 @@ import {
   ExchangeRateCurrencyParamSchema,
   ExchangeRatesQuery,
   ExchangeRatesQuerySchema,
-  ExchnageRateCalculationBody,
-  ExchnageRateCalculationBodySchema,
   Route,
 } from "../../entities";
 import {
-  calculateRate,
   getFxRates,
   getFxRatesByCurrency,
 } from "../../managers/fxrate-manager";
@@ -43,29 +40,6 @@ export const getExchangeRatesByCurrency: Route<{
     const fxRates = await getFxRatesByCurrency(req.server, req.params.currency);
 
     reply.code(200).send({ data: fxRates, size: fxRates.length });
-  },
-};
-
-export const calculateExchangeRate: Route<{
-  Body: ExchnageRateCalculationBody;
-}> = {
-  method: "POST",
-  url: "/exchange-rates/calculate",
-  schema: {
-    body: ExchnageRateCalculationBodySchema,
-  },
-  async handler(req, reply) {
-    if (!req.body || !req.body.source_currency || !req.body.target_currency) {
-      return reply.code(404).send({ data: [], status: false });
-    }
-
-    const calculatedRates = await calculateRate(req.server, req.body);
-
-    if (!calculatedRates) {
-      return reply.code(404).send({ data: {}, status: "failed" });
-    }
-
-    reply.code(200).send({ data: calculatedRates });
   },
 };
 

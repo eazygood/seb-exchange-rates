@@ -53,8 +53,8 @@ export class CurrencyConverterComponent implements OnInit {
       return;
     }
 
-    const fromCurrencyFxRate = this.fromCurrency === 'EUR' ? '1' : this.fxRates[this.fromCurrency][0].target_rate;
-    const toCurrencyFxRate = this.toCurrency === 'EUR' ? '1' : this.fxRates[this.toCurrency][0].target_rate
+    const fromCurrencyFxRate = this.fxRates[this.fromCurrency][0].target_rate;
+    const toCurrencyFxRate = this.fxRates[this.toCurrency][0].target_rate
 
     // source rate to 1 EUR
     const sourceCurrencyRateToEUR = 1 / parseFloat(fromCurrencyFxRate);

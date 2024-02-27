@@ -24,13 +24,6 @@ export const ExchangeRateCurrencyParamSchema = Type.Object({
 })
 export type ExchangeRateCurrencyParam = Static<typeof ExchangeRateCurrencyParamSchema>;
 
-export const ExchnageRateCalculationBodySchema = Type.Object({
-  source_currency: Type.String(),
-  target_currency: Type.String(),
-  amount: Type.String(),
-});
-export type ExchnageRateCalculationBody = Static<typeof ExchnageRateCalculationBodySchema>;
-
 export const ExchangeRatesQuerySchema = Type.Optional(Type.Object({
   latest: Type.Optional(Type.Boolean()),
 }));
