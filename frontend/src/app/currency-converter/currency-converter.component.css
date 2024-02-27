@@ -1,9 +1,25 @@
 /* Reset some default styles */
-* {
+/* * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+  } */
+
+  .table {
+    width: 100%; /* Adjust width as needed */
   }
+
+  .dropdown {
+    width: 200px; /* Adjust width as needed */
+  }
+
+  .container-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* height: 100vh; Adjust height as needed */
+  }
+  
   
   /* Apply a background color and text styles */
   body {
@@ -19,13 +35,13 @@
   }
   
   /* Style the container for currency inputs */
-  .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    margin: 20px;
-  }
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      margin: 20px;
+    }
   
   /* Style currency select and input elements */
   .currency {
