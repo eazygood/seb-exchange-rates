@@ -11,7 +11,5 @@ app.listen({ port: 5500, host: "0.0.0.0" }, (err, address) => {
 
   app.cron.startAllJobs();
 
-  // console.log(app.cron.getJobByName('fetch-fxrates'))
-
   console.log(`Cron job started`);
 });

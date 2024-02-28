@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify";
-import { FxRatesDb, FxRatesJson } from "../entities";
+import { FxRatesDb } from "../entities";
 import { DB_EXCHANGE_RATE_TABLE } from "../constants";
 import { getDateWithoutTime } from "../utils/datetime";
 

@@ -19,12 +19,10 @@ export async function registerMysqlDatabase(
 ): Promise<void> {
   await app.knex.raw("SELECT 1");
 
-  console.log("init migration");
   await app.knex.migrate.latest({
     database: "db",
     directory: path.join(__dirname, "../migrations"),
   });
-  console.log("migratin done");
 }
 
 export async function withinTransaction<T>({

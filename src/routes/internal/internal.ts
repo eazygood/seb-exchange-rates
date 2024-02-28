@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify";
-import { seedExchangeRates, seedExchangeRatesByDate } from "./seed-with-data";
+import { seedExchangeRates, seedExchangeRatesByDate } from "./seed";
 import { healtCheck } from "./health-check";
 
 export default async function registerInternalRoutes(app: FastifyInstance) {

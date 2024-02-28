@@ -1,0 +1,72 @@
+4501bc64622aee3a7e7f22b692885a29
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const node_test_1 = require("node:test");
+const xml_to_json_1 = __importDefault(require("../../../src/utils/xml-to-json"));
+const mockData = `
+<FxRates xmlns="http://www.lb.lt/WebServices/FxRates">
+<script/>
+<FxRate>
+<Tp>EU</Tp>
+<Dt>2024-02-23</Dt>
+<CcyAmt>
+<Ccy>EUR</Ccy>
+<Amt>1</Amt>
+</CcyAmt>
+<CcyAmt>
+<Ccy>AUD</Ccy>
+<Amt>1.6467</Amt>
+</CcyAmt>
+</FxRate>
+<FxRate>
+<Tp>EU</Tp>
+<Dt>2024-02-23</Dt>
+<CcyAmt>
+<Ccy>EUR</Ccy>
+<Amt>1</Amt>
+</CcyAmt>
+<CcyAmt>
+<Ccy>BGN</Ccy>
+<Amt>1.9558</Amt>
+</CcyAmt>
+</FxRate>
+</FxRates>
+`;
+beforeEach(async () => {
+});
+afterAll(async () => {
+    jest.resetAllMocks();
+});
+(0, node_test_1.describe)("parse xml to json", () => {
+    it("parsed fx rates xml to json", async () => {
+        const jsonData = await (0, xml_to_json_1.default)(mockData);
+        expect(jsonData).toEqual({
+            FxRates: {
+                $: { xmlns: "http://www.lb.lt/WebServices/FxRates" },
+                script: "",
+                FxRate: [
+                    {
+                        Tp: "EU",
+                        Dt: "2024-02-23",
+                        CcyAmt: [
+                            { Ccy: "EUR", Amt: "1" },
+                            { Ccy: "AUD", Amt: "1.6467" },
+                        ],
+                    },
+                    {
+                        Tp: "EU",
+                        Dt: "2024-02-23",
+                        CcyAmt: [
+                            { Ccy: "EUR", Amt: "1" },
+                            { Ccy: "BGN", Amt: "1.9558" },
+                        ],
+                    },
+                ],
+            },
+        });
+    });
+});
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJmaWxlIjoiL1VzZXJzL2tpbW5hY2lzY2lvbmlzL2dpdC9wZXJzb25hbC9zZWItZXhjaGFuZ2UtcmF0ZXMvdGVzdC91bml0L3V0aWxzL3htbC10by1qc29uLnRlc3QudHMiLCJtYXBwaW5ncyI6Ijs7Ozs7QUFBQSx5Q0FBcUM7QUFDckMsaUZBQXVEO0FBRXZELE1BQU0sUUFBUSxHQUFHOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0NBNEJoQixDQUFDO0FBRUYsVUFBVSxDQUFDLEtBQUssSUFBSSxFQUFFO0FBQ3RCLENBQUMsQ0FBQyxDQUFDO0FBRUgsUUFBUSxDQUFDLEtBQUssSUFBSSxFQUFFO0lBQ2hCLElBQUksQ0FBQyxhQUFhLEVBQUUsQ0FBQztBQUN6QixDQUFDLENBQUMsQ0FBQTtBQUdGLElBQUEsb0JBQVEsRUFBQyxtQkFBbUIsRUFBRSxHQUFHLEVBQUU7SUFDL0IsRUFBRSxDQUFDLDZCQUE2QixFQUFFLEtBQUssSUFBSSxFQUFFO1FBQ3pDLE1BQU0sUUFBUSxHQUFHLE1BQU0sSUFBQSxxQkFBUyxFQUFDLFFBQVEsQ0FBQyxDQUFDO1FBQzNDLE1BQU0sQ0FBQyxRQUFRLENBQUMsQ0FBQyxPQUFPLENBQUM7WUFDckIsT0FBTyxFQUFFO2dCQUNMLENBQUMsRUFBRSxFQUFFLEtBQUssRUFBRSxzQ0FBc0MsRUFBRTtnQkFDcEQsTUFBTSxFQUFFLEVBQUU7Z0JBQ1YsTUFBTSxFQUFFO29CQUNKO3dCQUNJLEVBQUUsRUFBRSxJQUFJO3dCQUNSLEVBQUUsRUFBRSxZQUFZO3dCQUNoQixNQUFNLEVBQUU7NEJBQ0osRUFBRSxHQUFHLEVBQUUsS0FBSyxFQUFFLEdBQUcsRUFBRSxHQUFHLEVBQUU7NEJBQ3hCLEVBQUUsR0FBRyxFQUFFLEtBQUssRUFBRSxHQUFHLEVBQUUsUUFBUSxFQUFFO3lCQUNoQztxQkFDSjtvQkFDRDt3QkFDSSxFQUFFLEVBQUUsSUFBSTt3QkFDUixFQUFFLEVBQUUsWUFBWTt3QkFDaEIsTUFBTSxFQUFFOzRCQUNKLEVBQUUsR0FBRyxFQUFFLEtBQUssRUFBRSxHQUFHLEVBQUUsR0FBRyxFQUFFOzRCQUN4QixFQUFFLEdBQUcsRUFBRSxLQUFLLEVBQUUsR0FBRyxFQUFFLFFBQVEsRUFBRTt5QkFDaEM7cUJBQ0o7aUJBQ0o7YUFDSjtTQUNKLENBQUMsQ0FBQztJQUNQLENBQUMsQ0FBQyxDQUFDO0FBQ1AsQ0FBQyxDQUFDLENBQUMiLCJuYW1lcyI6W10sInNvdXJjZXMiOlsiL1VzZXJzL2tpbW5hY2lzY2lvbmlzL2dpdC9wZXJzb25hbC9zZWItZXhjaGFuZ2UtcmF0ZXMvdGVzdC91bml0L3V0aWxzL3htbC10by1qc29uLnRlc3QudHMiXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgZGVzY3JpYmUgfSBmcm9tIFwibm9kZTp0ZXN0XCI7XG5pbXBvcnQgeG1sVG9Kc29uIGZyb20gXCIuLi8uLi8uLi9zcmMvdXRpbHMveG1sLXRvLWpzb25cIjtcblxuY29uc3QgbW9ja0RhdGEgPSBgXG48RnhSYXRlcyB4bWxucz1cImh0dHA6Ly93d3cubGIubHQvV2ViU2VydmljZXMvRnhSYXRlc1wiPlxuPHNjcmlwdC8+XG48RnhSYXRlPlxuPFRwPkVVPC9UcD5cbjxEdD4yMDI0LTAyLTIzPC9EdD5cbjxDY3lBbXQ+XG48Q2N5PkVVUjwvQ2N5PlxuPEFtdD4xPC9BbXQ+XG48L0NjeUFtdD5cbjxDY3lBbXQ+XG48Q2N5PkFVRDwvQ2N5PlxuPEFtdD4xLjY0Njc8L0FtdD5cbjwvQ2N5QW10PlxuPC9GeFJhdGU+XG48RnhSYXRlPlxuPFRwPkVVPC9UcD5cbjxEdD4yMDI0LTAyLTIzPC9EdD5cbjxDY3lBbXQ+XG48Q2N5PkVVUjwvQ2N5PlxuPEFtdD4xPC9BbXQ+XG48L0NjeUFtdD5cbjxDY3lBbXQ+XG48Q2N5PkJHTjwvQ2N5PlxuPEFtdD4xLjk1NTg8L0FtdD5cbjwvQ2N5QW10PlxuPC9GeFJhdGU+XG48L0Z4UmF0ZXM+XG5gO1xuXG5iZWZvcmVFYWNoKGFzeW5jICgpID0+IHtcbn0pO1xuXG5hZnRlckFsbChhc3luYyAoKSA9PiB7XG4gICAgamVzdC5yZXNldEFsbE1vY2tzKCk7XG59KVxuXG5cbmRlc2NyaWJlKFwicGFyc2UgeG1sIHRvIGpzb25cIiwgKCkgPT4ge1xuICAgIGl0KFwicGFyc2VkIGZ4IHJhdGVzIHhtbCB0byBqc29uXCIsIGFzeW5jICgpID0+IHtcbiAgICAgICAgY29uc3QganNvbkRhdGEgPSBhd2FpdCB4bWxUb0pzb24obW9ja0RhdGEpO1xuICAgICAgICBleHBlY3QoanNvbkRhdGEpLnRvRXF1YWwoe1xuICAgICAgICAgICAgRnhSYXRlczoge1xuICAgICAgICAgICAgICAgICQ6IHsgeG1sbnM6IFwiaHR0cDovL3d3dy5sYi5sdC9XZWJTZXJ2aWNlcy9GeFJhdGVzXCIgfSxcbiAgICAgICAgICAgICAgICBzY3JpcHQ6IFwiXCIsXG4gICAgICAgICAgICAgICAgRnhSYXRlOiBbXG4gICAgICAgICAgICAgICAgICAgIHtcbiAgICAgICAgICAgICAgICAgICAgICAgIFRwOiBcIkVVXCIsXG4gICAgICAgICAgICAgICAgICAgICAgICBEdDogXCIyMDI0LTAyLTIzXCIsXG4gICAgICAgICAgICAgICAgICAgICAgICBDY3lBbXQ6IFtcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICB7IENjeTogXCJFVVJcIiwgQW10OiBcIjFcIiB9LFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgIHsgQ2N5OiBcIkFVRFwiLCBBbXQ6IFwiMS42NDY3XCIgfSxcbiAgICAgICAgICAgICAgICAgICAgICAgIF0sXG4gICAgICAgICAgICAgICAgICAgIH0sXG4gICAgICAgICAgICAgICAgICAgIHtcbiAgICAgICAgICAgICAgICAgICAgICAgIFRwOiBcIkVVXCIsXG4gICAgICAgICAgICAgICAgICAgICAgICBEdDogXCIyMDI0LTAyLTIzXCIsXG4gICAgICAgICAgICAgICAgICAgICAgICBDY3lBbXQ6IFtcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICB7IENjeTogXCJFVVJcIiwgQW10OiBcIjFcIiB9LFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgIHsgQ2N5OiBcIkJHTlwiLCBBbXQ6IFwiMS45NTU4XCIgfSxcbiAgICAgICAgICAgICAgICAgICAgICAgIF0sXG4gICAgICAgICAgICAgICAgICAgIH0sXG4gICAgICAgICAgICAgICAgXSxcbiAgICAgICAgICAgIH0sXG4gICAgICAgIH0pO1xuICAgIH0pO1xufSk7XG4iXSwidmVyc2lvbiI6M30=

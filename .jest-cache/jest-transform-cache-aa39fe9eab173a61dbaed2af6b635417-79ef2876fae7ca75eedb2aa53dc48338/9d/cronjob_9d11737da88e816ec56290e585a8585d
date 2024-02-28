@@ -1,0 +1,16 @@
+64f66a8471ffbe00b7e5d811fc5ccd14
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const managers_1 = require("../managers");
+async function createCronJobs(app) {
+    app.cron.createJob({
+        name: 'fetch-fxrates',
+        cronTime: '1 0 * * *', // Runs every day at 00:01
+        // cronTime: "*/10 * * * * *", // Runs every 10 seconds
+        onTick: async () => {
+            await (0, managers_1.populateDbWithExchangeRates)(app);
+        },
+    });
+}
+exports.default = createCronJobs;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJmaWxlIjoiL1VzZXJzL2tpbW5hY2lzY2lvbmlzL2dpdC9wZXJzb25hbC9zZWItZXhjaGFuZ2UtcmF0ZXMvc3JjL2pvYnMvY3Jvbi1qb2IudHMiLCJtYXBwaW5ncyI6Ijs7QUFDQSwwQ0FBMEQ7QUFFM0MsS0FBSyxVQUFVLGNBQWMsQ0FBQyxHQUFvQjtJQUM3RCxHQUFHLENBQUMsSUFBSSxDQUFDLFNBQVMsQ0FBQztRQUNmLElBQUksRUFBRSxlQUFlO1FBQ3JCLFFBQVEsRUFBRSxXQUFXLEVBQUUsMEJBQTBCO1FBQ2pELHVEQUF1RDtRQUN2RCxNQUFNLEVBQUUsS0FBSyxJQUFJLEVBQUU7WUFDZixNQUFNLElBQUEsc0NBQTJCLEVBQUMsR0FBRyxDQUFDLENBQUM7UUFDM0MsQ0FBQztLQUNKLENBQUMsQ0FBQztBQUNQLENBQUM7QUFURCxpQ0FTQyIsIm5hbWVzIjpbXSwic291cmNlcyI6WyIvVXNlcnMva2ltbmFjaXNjaW9uaXMvZ2l0L3BlcnNvbmFsL3NlYi1leGNoYW5nZS1yYXRlcy9zcmMvam9icy9jcm9uLWpvYi50cyJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBGYXN0aWZ5SW5zdGFuY2UgfSBmcm9tIFwiZmFzdGlmeVwiO1xuaW1wb3J0IHsgcG9wdWxhdGVEYldpdGhFeGNoYW5nZVJhdGVzIH0gZnJvbSBcIi4uL21hbmFnZXJzXCI7XG5cbmV4cG9ydCBkZWZhdWx0IGFzeW5jIGZ1bmN0aW9uIGNyZWF0ZUNyb25Kb2JzKGFwcDogRmFzdGlmeUluc3RhbmNlKSB7XG4gICAgYXBwLmNyb24uY3JlYXRlSm9iKHtcbiAgICAgICAgbmFtZTogJ2ZldGNoLWZ4cmF0ZXMnLFxuICAgICAgICBjcm9uVGltZTogJzEgMCAqICogKicsIC8vIFJ1bnMgZXZlcnkgZGF5IGF0IDAwOjAxXG4gICAgICAgIC8vIGNyb25UaW1lOiBcIiovMTAgKiAqICogKiAqXCIsIC8vIFJ1bnMgZXZlcnkgMTAgc2Vjb25kc1xuICAgICAgICBvblRpY2s6IGFzeW5jICgpID0+IHtcbiAgICAgICAgICAgIGF3YWl0IHBvcHVsYXRlRGJXaXRoRXhjaGFuZ2VSYXRlcyhhcHApO1xuICAgICAgICB9LFxuICAgIH0pO1xufVxuIl0sInZlcnNpb24iOjN9

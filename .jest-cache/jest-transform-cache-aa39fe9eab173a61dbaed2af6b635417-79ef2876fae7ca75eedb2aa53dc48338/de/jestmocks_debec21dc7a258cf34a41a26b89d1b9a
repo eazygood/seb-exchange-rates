@@ -1,0 +1,36 @@
+5875844ff008907f1a67a8f84c3306da
+// const knex = jest.fn();
+const mysql = jest.fn();
+const Knex = require('knex');
+const fp = require('fastify-plugin');
+
+Knex.knex = jest.mock();
+
+const knexPlugin = async (fastify, options) => {
+    console.log(options);
+    const knex = { 
+        raw: jest.fn(),
+        destroy: jest.fn(),
+    }
+
+    fastify.decorate('knex', knex);
+}
+
+// jest.mock('./src/plugins/knex-plugin', (() => {
+//   return knexPlugin;
+// }));
+const mockFp = (pluginFunction, options) => {
+    // Call the plugin function with Fastify and options
+    console.log(pluginFunction)
+    return pluginFunction(app, options);
+  };
+
+jest.mock('./src/plugins/knex-plugin', () => ({
+    __esModule: true,
+    default: mockFp(knexPlugin),
+}));
+
+// knex = {
+//     raw: jest.fn().mockReturnThis(),
+//     destroy: jest.fn().mockReturnThis(),
+// }
