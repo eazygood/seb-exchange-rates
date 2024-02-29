@@ -1,9 +1,0 @@
-6f935cf96eb95221cb01fef8826af4cc
-// const knex = jest.fn();
-const mysql = jest.fn();
-const knex = jest.mock('knex');
-
-knex = {
-    raw: jest.fn().mockReturnThis(),
-    destroy: jest.fn().mockReturnThis(),
-}
