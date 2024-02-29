@@ -34,10 +34,10 @@ export const getExchangeRatesByCurrency: Route<{
   },
   async handler(req, reply) {
     if (!req.params.currency) {
-      return reply.code(404).send({ data: [], status: false });
+      return reply.code(400).send({ data: [], status: false });
     }
 
-    const fxRates = await getFxRatesByCurrency(req.server, req.params.currency);
+    const fxRates = await getFxRatesByCurrency(req.server, req.params.currency.toUpperCase() );
 
     reply.code(200).send({ data: fxRates, size: fxRates.length });
   },

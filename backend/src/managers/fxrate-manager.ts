@@ -26,10 +26,12 @@ export const getFxRatesByCurrency = async (
 ): Promise<FxRateByDateData> => {
   const fxRates: FxRatesDb[] = await repositories.getFxRates(app);
 
-  const rates: StucturedFxRates[] = fxRates
+  const rates =_.chain(fxRates)
     .map((rate) => JSON.parse(rate.rates))
-    .flat()
-    .filter((rate) => rate.target_currency === currency);
+    .flatten()
+    .filter((rate) => rate.target_currency === currency)
+    .orderBy('exchange_date', 'desc')
+    .value()
 
   return transformData(rates);
 };

@@ -1,4 +1,4 @@
-import { Type, Static } from "@sinclair/typebox";
+import { Type, Static, TSchema } from "@sinclair/typebox";
 import {
   RawReplyDefaultExpression,
   RawRequestDefaultExpression,
@@ -14,9 +14,11 @@ export type Route<Types extends RouteGenericInterface> = RouteOptions<
   Types
 >;
 
-export const SeedFxRatesByDateSchema = Type.Object({
+export const Nullable = <T extends TSchema>(type: T) => Type.Union([type, Type.Null()]);
+
+export const SeedFxRatesByDateSchema = Nullable(Type.Optional(Type.Object({
   date: Type.String(),
-});
+})));
 export type SeedFxRatesByDateQuery = Static<typeof SeedFxRatesByDateSchema>;
 
 export const ExchangeRateCurrencyParamSchema = Type.Object({
