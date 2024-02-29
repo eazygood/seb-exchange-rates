@@ -1,0 +1,42 @@
+43cd87473c3d82007bfe4df473560cd2
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.withinTransaction = exports.registerMysqlDatabase = exports.getConfig = void 0;
+const path_1 = __importDefault(require("path"));
+function getConfig() {
+    return {
+        client: "mysql2",
+        connection: {
+            host: "mysql",
+            user: "user",
+            password: "password",
+            database: "db",
+        },
+    };
+}
+exports.getConfig = getConfig;
+async function registerMysqlDatabase(app) {
+    await app.knex.raw("SELECT 1");
+    await app.knex.migrate.latest({
+        database: "db",
+        directory: path_1.default.join(__dirname, "../migrations"),
+    });
+}
+exports.registerMysqlDatabase = registerMysqlDatabase;
+async function withinTransaction({ app, callback, }) {
+    const trx = await app.knex.transaction();
+    try {
+        const data = await callback(trx);
+        await trx.commit();
+        return data;
+    }
+    catch (err) {
+        await trx.rollback();
+        throw new Error("database commit failed");
+    }
+}
+exports.withinTransaction = withinTransaction;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJmaWxlIjoiL1VzZXJzL2tpbW5hY2lzY2lvbmlzL2dpdC9wZXJzb25hbC9zZWItZXhjaGFuZ2UtcmF0ZXMvYmFja2VuZC9zcmMvYWRhcHRlcnMvbXlzcWwtYWRhcHRlci50cyIsIm1hcHBpbmdzIjoiOzs7Ozs7QUFDQSxnREFBd0I7QUFHeEIsU0FBZ0IsU0FBUztJQUN2QixPQUFPO1FBQ0wsTUFBTSxFQUFFLFFBQVE7UUFDaEIsVUFBVSxFQUFFO1lBQ1YsSUFBSSxFQUFFLE9BQU87WUFDYixJQUFJLEVBQUUsTUFBTTtZQUNaLFFBQVEsRUFBRSxVQUFVO1lBQ3BCLFFBQVEsRUFBRSxJQUFJO1NBQ2Y7S0FDRixDQUFBO0FBQ0gsQ0FBQztBQVZELDhCQVVDO0FBRU0sS0FBSyxVQUFVLHFCQUFxQixDQUN6QyxHQUFvQjtJQUVwQixNQUFNLEdBQUcsQ0FBQyxJQUFJLENBQUMsR0FBRyxDQUFDLFVBQVUsQ0FBQyxDQUFDO0lBRS9CLE1BQU0sR0FBRyxDQUFDLElBQUksQ0FBQyxPQUFPLENBQUMsTUFBTSxDQUFDO1FBQzVCLFFBQVEsRUFBRSxJQUFJO1FBQ2QsU0FBUyxFQUFFLGNBQUksQ0FBQyxJQUFJLENBQUMsU0FBUyxFQUFFLGVBQWUsQ0FBQztLQUNqRCxDQUFDLENBQUM7QUFDTCxDQUFDO0FBVEQsc0RBU0M7QUFFTSxLQUFLLFVBQVUsaUJBQWlCLENBQUksRUFDekMsR0FBRyxFQUNILFFBQVEsR0FJVDtJQUNDLE1BQU0sR0FBRyxHQUFHLE1BQU0sR0FBRyxDQUFDLElBQUksQ0FBQyxXQUFXLEVBQUUsQ0FBQztJQUV6QyxJQUFJLENBQUM7UUFDSCxNQUFNLElBQUksR0FBRyxNQUFNLFFBQVEsQ0FBQyxHQUFHLENBQUMsQ0FBQztRQUVqQyxNQUFNLEdBQUcsQ0FBQyxNQUFNLEVBQUUsQ0FBQztRQUVuQixPQUFPLElBQUksQ0FBQztJQUNkLENBQUM7SUFBQyxPQUFPLEdBQUcsRUFBRSxDQUFDO1FBQ2IsTUFBTSxHQUFHLENBQUMsUUFBUSxFQUFFLENBQUM7UUFFckIsTUFBTSxJQUFJLEtBQUssQ0FBQyx3QkFBd0IsQ0FBQyxDQUFDO0lBQzVDLENBQUM7QUFDSCxDQUFDO0FBcEJELDhDQW9CQyIsIm5hbWVzIjpbXSwic291cmNlcyI6WyIvVXNlcnMva2ltbmFjaXNjaW9uaXMvZ2l0L3BlcnNvbmFsL3NlYi1leGNoYW5nZS1yYXRlcy9iYWNrZW5kL3NyYy9hZGFwdGVycy9teXNxbC1hZGFwdGVyLnRzIl0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IEZhc3RpZnlJbnN0YW5jZSB9IGZyb20gXCJmYXN0aWZ5XCI7XG5pbXBvcnQgcGF0aCBmcm9tIFwicGF0aFwiO1xuaW1wb3J0IHsgS25leCB9IGZyb20gXCJrbmV4XCI7XG5cbmV4cG9ydCBmdW5jdGlvbiBnZXRDb25maWcoKSB7XG4gIHJldHVybiB7XG4gICAgY2xpZW50OiBcIm15c3FsMlwiLFxuICAgIGNvbm5lY3Rpb246IHtcbiAgICAgIGhvc3Q6IFwibXlzcWxcIixcbiAgICAgIHVzZXI6IFwidXNlclwiLFxuICAgICAgcGFzc3dvcmQ6IFwicGFzc3dvcmRcIixcbiAgICAgIGRhdGFiYXNlOiBcImRiXCIsXG4gICAgfSxcbiAgfVxufVxuXG5leHBvcnQgYXN5bmMgZnVuY3Rpb24gcmVnaXN0ZXJNeXNxbERhdGFiYXNlKFxuICBhcHA6IEZhc3RpZnlJbnN0YW5jZVxuKTogUHJvbWlzZTx2b2lkPiB7XG4gIGF3YWl0IGFwcC5rbmV4LnJhdyhcIlNFTEVDVCAxXCIpO1xuXG4gIGF3YWl0IGFwcC5rbmV4Lm1pZ3JhdGUubGF0ZXN0KHtcbiAgICBkYXRhYmFzZTogXCJkYlwiLFxuICAgIGRpcmVjdG9yeTogcGF0aC5qb2luKF9fZGlybmFtZSwgXCIuLi9taWdyYXRpb25zXCIpLFxuICB9KTtcbn1cblxuZXhwb3J0IGFzeW5jIGZ1bmN0aW9uIHdpdGhpblRyYW5zYWN0aW9uPFQ+KHtcbiAgYXBwLFxuICBjYWxsYmFjayxcbn06IHtcbiAgYXBwOiBGYXN0aWZ5SW5zdGFuY2U7XG4gIGNhbGxiYWNrOiAodHJ4OiBLbmV4LlRyYW5zYWN0aW9uKSA9PiBQcm9taXNlPFQ+O1xufSk6IFByb21pc2U8VD4ge1xuICBjb25zdCB0cnggPSBhd2FpdCBhcHAua25leC50cmFuc2FjdGlvbigpO1xuXG4gIHRyeSB7XG4gICAgY29uc3QgZGF0YSA9IGF3YWl0IGNhbGxiYWNrKHRyeCk7XG5cbiAgICBhd2FpdCB0cnguY29tbWl0KCk7XG5cbiAgICByZXR1cm4gZGF0YTtcbiAgfSBjYXRjaCAoZXJyKSB7XG4gICAgYXdhaXQgdHJ4LnJvbGxiYWNrKCk7XG5cbiAgICB0aHJvdyBuZXcgRXJyb3IoXCJkYXRhYmFzZSBjb21taXQgZmFpbGVkXCIpO1xuICB9XG59XG4iXSwidmVyc2lvbiI6M30=
