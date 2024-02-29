@@ -8,7 +8,6 @@ COPY tsconfig.json ./
 COPY src ./src
 
 RUN npm install
-RUN ls -a
 RUN npm run build
 
 COPY . .
