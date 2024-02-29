@@ -42,7 +42,7 @@ Used technology by candidate ✅
 2. Run command: `docker-compose down -v && docker-compose build && docker-compose up`
 3. Angular app host: `http://localhost:4200`
 4. Fastify app host: `http://0.0.0.0:5500`
-5. Trigger endpoint with empty body: `POST /internal/exchange-rates/seed` , to populate initial data
+5. Trigger endpoint with empty body: `POST http://0.0.0.0:5500/internal/exchange-rates/seed`, to populate initial data
 
 ## Public API
 
