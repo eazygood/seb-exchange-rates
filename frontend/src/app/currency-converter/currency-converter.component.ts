@@ -34,7 +34,6 @@ export class CurrencyConverterComponent implements OnInit {
 
     this.fxRatesService.getCurrencies().subscribe((response) => {
       this.currencies = response.data;
-      console.log(this.currencies);
     });
   }
 

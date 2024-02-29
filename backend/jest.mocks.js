@@ -1,7 +1,6 @@
 const fp = require('fastify-plugin');
 
 const knexPlugin = fp(async (fastify, options) => {
-    console.log(options);
     const knex = { 
         raw: jest.fn(),
         destroy: jest.fn(),

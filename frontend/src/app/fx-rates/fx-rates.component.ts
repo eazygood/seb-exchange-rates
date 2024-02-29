@@ -24,7 +24,6 @@ export class FxRatesComponent implements OnInit {
 
   ngOnInit(): void {
     this.fxRatesService.getCurrencies().subscribe((response) => {
-        console.log(response.data);
       this.currencies = response.data;
     });
   }

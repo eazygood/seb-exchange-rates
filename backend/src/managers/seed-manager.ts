@@ -46,7 +46,7 @@ export const populateDbWithExchangeRates = async (
       };
     }
   );
-  
+
   const postingDate = getDateWithoutTime(date).toISOString();
 
   const defaultEurCurrency = {

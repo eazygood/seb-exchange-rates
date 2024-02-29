@@ -21,7 +21,12 @@
         <option value="" disabled [attr.selected]="true">Select currency</option>
         <option *ngFor="let currency of currencies" [value]="currency">{{ currency }}</option>
       </select>
-      <input type="number" id="amount-two" placeholder="0" value="{{convertResult }}" (input)="convertCurrency()">
+      <input type="number" id="amount-two" placeholder="0" value="{{ convertResult }}" (input)="convertCurrency()">
     </div>
+  </div>
+</div>
+<div class="container-wrapper">
+  <div class="container">
+    <p *ngIf="convertExchangeRate !== ''">Exchange Rate: {{ convertExchangeRate }}</p>
   </div>
 </div>
