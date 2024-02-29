@@ -38,7 +38,7 @@ Used technology by candidate ✅
 
 ### How to run application
 
-1. `Docker` and `docker-compose` has to be installed on computer
+1. `docker` and `docker-compose` has to be installed on computer
 2. Run command: `docker-compose down -v && docker-compose build && docker-compose up`
 3. Angular app host: `http://localhost:4200`
 4. Fastify app host: `http://0.0.0.0:5500`
