@@ -42,13 +42,13 @@ services:
       - api:/usr/src/app/
     networks:
       - backend-network
-  # frontend-app:
-  #   container_name: frontend
-  #   build:
-  #     context: ./frontend
-  #     dockerfile: ./Dockerfile
-  #   ports:
-  #     - 4200:80
+  frontend-app:
+    container_name: frontend
+    build:
+      context: ./frontend
+      dockerfile: ./Dockerfile
+    ports:
+      - 4200:80
 volumes:
   api:
   mysql_data:
