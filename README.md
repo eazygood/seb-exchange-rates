@@ -28,7 +28,9 @@ Currency calculator ✅:
 - Entering amount
 - Displays the amount in foreign currency
 - Displays the rate at which it was calculated
+
 Exchange rate automatically obtained every day (used cron job) ✅
+
 Used technology by candidate ✅
 - NodeJS 20 (lts/iron)
 - Typescript
