@@ -1,23 +1,5 @@
 import { Static, Type } from "@sinclair/typebox";
 
-// interface CcyAmt {
-//   Ccy: string;
-//   Amt: string;
-// }
-// interface Rate {
-//   Tp: String;
-//   Dt: string;
-//   CcyAmt: CcyAmt[];
-// }
-
-// interface ExternalFxRate {
-//   $: { xmlns: string };
-//   FxRate: Rate[];
-// }
-// interface ExternalFxRates {
-//   FxRates: ExternalFxRate;
-// }
-
 export const CcyAmtSchema = Type.Object({
   Ccy: Type.String(),
   Amt: Type.String(),

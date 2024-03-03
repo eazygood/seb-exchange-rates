@@ -12,7 +12,6 @@ export const seedExchangeRates: Route<{ Body: SeedFxRatesByDateQuery }> = {
   method: "POST",
   url: "/exchange-rates/seed",
   schema: {
-    // querystring: SeedFxRatesByDateSchema,
     body: SeedFxRatesByDateSchema
 
   },
